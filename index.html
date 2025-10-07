@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 22nd Birthday ❤</title>
+  <style>
+    body {
+  margin: 0;
+  padding-top: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* changed from center to top-align for better scrolling */
+  min-height: 100vh;
+  /* overflow: hidden; */ /* removed */
+  text-align: center;
+  padding-top: 50px; /* optional, add some spacing from top */
+}
+
+    .container {
+      margin-top: 100px;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 1.5s ease;
+  position: relative;
+}
+
+    h1, h2, p {
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      background: #ff758c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff527b;
+    }
+    .hidden {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .letters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .letter {
+      background: #ffe0eb;
+      padding: 15px;
+      border-radius: 15px;
+      width: 150px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .letter:hover {
+      transform: scale(1.05);
+      background: #ffd6e0;
+    }
+    /* Letter card */
+
+    /* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  overflow: auto; /* allows scrolling if content exceeds viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* space around the card */
+}
+
+/* Letter card */
+.letter-card {
+  background: #ffe0eb;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh; /* card won’t exceed 90% of viewport height */
+  overflow-y: auto; /* vertical scroll inside the card if content is too long */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  text-align: center;
+  position: relative;
+}
+
+    .letter-card p {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .close-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      background: #ff758c;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .close-btn:hover {
+      background: #ff527b;
+    }
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 999;
+    }
+
+    .in{
+      width: 180px;
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="welcome">
+    <h1>Happy 22nd Birthday Love ❤ May this year be filled with lot of happy moments, acheivements, success for you. </h1>
+    <p>Welcome to your little treasure hunt! Answer the questions to unlock your surprise 💌</p>
+    <button onclick="startQuiz()">Start</button>
+  </div>
+
+  <div class="container hidden" id="quiz">
+    <h2 id="question">Question will appear here</h2>
+    <input type="text" id="answer" placeholder="Type your answer here..." , class="in"/>
+    <br><br>
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="feedback"></p>
+  </div>
+
+  <div class="container hidden" id="final">
+    <h2>💌 You did it, Babyyyyyy 💌</h2>
+    <p>Here are your 22 letters, one for each year of your amazing life 🥰</p>
+    <div class="letters" id="letters"></div>
+  </div>
+
+  <script>
+    const questions = [
+{q: "What colour dress was I wearing when we first met?", a: "black"},
+{q: "What colour were you wearing when we first met? Any one colour?", a: "white"},
+{q:  "What was the bill on our first meeting?", a: "1400"},
+{q: "What's my stream(course) in engineering (shirt form)?", a: "aiml"},
+{q: "How many days do my periods last?", a: "5"},
+{q: "What's the name of the first movie we watched?", a: "sthree 2"},
+{q: "What's my phone brand?", a : "vivo"},
+{q : "What does my mom call me?", a: "putta"},
+{q : "What does my dad call me?", a : "baby"},
+{q : "Where am I from? , you know the answer which is not the answer.", a : "ladyhill"}
+    ];
+
+    const letters = [
+      "1 : If there's one thing I like about October 8th, is that you were born today." ,
+"2: I am completely bewitched by you, so much that I hate myself sometimes for showing so much of myself to you, which I've not to anyone else to you.",
+
+"3: You are one in a million baby, no, you are the only one in this world, and you are perfectly perfect.",
+
+"4 : You have no idea about the impact you've had on me from the very first day since we started talking to each other.",
+
+"5 : I never knew that I will open to someone even 1 percent of how much you know me. And you make me happy every single day in one or the other day, even if I'm shit angry on you.",
+
+"6 :I still remember the first day we texted, I remember how you were afraid of talking to after 10, but now? ",
+
+"7 : I remember all your silly pickup lines, and it's embarassing to admit that I loved all of that, and maybe I actually fell for those.",
+
+"8 : I remember the day I talked on call with you for the first time, I never, never talked to anyone like I did with you, and trust me I didn't wanted that call to end.",
+
+"9 : I remember how you always made me happy, I remember how you opened up to me for the first time, and it was about gym, I still remember how much I loved you talking to me like that and trusting me so much.",
+
+"10 : I remember how you used to like your cousin, and I hated it, you have no idea how possessive I am about you, and you will never know.",
+
+"11 : I remember the day we first met, I don't know where I got that courage, you may have even turned out as a kidnapper, but baby you know I just knew that you weren't. I knew that I could trust you. I don't know how.",
+
+"12 : I remember your birthday last year, how I was trying to play with you telling I'll sleep, but you were so chill about it, and when I asked, you told me that I couldn't forget your birthday, were you scared this time?",
+
+"13 : You are 22 now, and I don't know how you grew up so fast, I was not a part of your life for almost 21 years, but I'll be a part of your life more than that, hopefully.",
+
+"14 : I can't buy you expensive things baby, this is all I can do, and I genuinely hope that it makes you atleast 1 percent happy, and makes your day a little better and atleast brings a small smile on your face.",
+"15 : Do you remember how we celebrated new year together, and fought after that? We fight a lot, but we are still together, that means our fights are not as strong as our bond. And I love that fact.",
+
+"16 : I wore your jhumka today, and I've got so many compliments for that. And I love that you gave it to me. It's yours. And I love it so so so much.",
+
+"17 : I know that you are very dominant, you want everything to happen according to you, but I know how to handle you, because I'm your Sthuthi. I know you better than anyone else.",
+
+"18 : One thing I do not like about you is that you try to hide a lot of things from me, and I don't like it. Next time onwards promise me that you'll share everything with me.",
+
+"19 : It's your day today baby, enjoy it to the fullest, spend it however you want. Do whatever you love. And remember I'll always wish you first.",
+
+"20 : Do you remember how you sent me a snap of Sahyadri before my exam and wished me luck, do you even know how much happy it made me, I've showed it to all my friends. And that is one of the most sweetest gesture I've ever witnessed.",
+
+"21 : Baby do you know that the universe is expanding everyday? That's same as my love for you, it expands everyday, so much that it scares me.",
+
+"22 : I love you baby, Happy Birthday. And the secret message is 'You are the best' Mwahhhh💋"
+    ];
+
+    let currentQuestion = 0;
+
+    function startQuiz(){
+      document.getElementById("welcome").classList.add("hidden");
+      document.getElementById("quiz").classList.remove("hidden");
+      loadQuestion();
+    }
+
+    function loadQuestion(){
+      document.getElementById("question").innerText = questions[currentQuestion].q;
+      document.getElementById("answer").value = "";
+      document.getElementById("feedback").innerText = "";
+    }
+
+    function checkAnswer(){
+      let ans = document.getElementById("answer").value.trim().toLowerCase();
+      if(ans === questions[currentQuestion].a){
+        currentQuestion++;
+        if(currentQuestion < questions.length){
+          loadQuestion();
+        } else {
+          finishQuiz();
+        }
+      } else {
+        document.getElementById("feedback").innerText = "Oops, try again 😉";
+      }
+    }
+
+    function finishQuiz(){
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("final").classList.remove("hidden");
+      const lettersDiv = document.getElementById("letters");
+      lettersDiv.innerHTML = "";
+
+      letters.forEach((txt, i) => {
+        const div = document.createElement("div");
+        div.className = "letter";
+        div.innerText = `Letter ${i+1}`;
+        div.onclick = () => showLetterCard(txt);
+        lettersDiv.appendChild(div);
+      });
+    }
+
+    function showLetterCard(text){
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+  document.body.appendChild(overlay);
+
+  const card = document.createElement("div");
+  card.className = "letter-card";
+  card.innerHTML = `<p>${text}</p><button class="close-btn">Close</button>`;
+  overlay.appendChild(card); // append card inside overlay for scrolling
+
+  // Close functionality
+  card.querySelector(".close-btn").onclick = () => {
+    overlay.remove();
+  };
+}
+
+  </script>
+</body>
+</html>
